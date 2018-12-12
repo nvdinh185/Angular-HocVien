@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { FormGroup, FormBuilder, FormControl } from '@angular/forms'
 
 @Component({
   selector: 'app-hoc-vien',
@@ -6,22 +7,24 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./hoc-vien.component.css']
 })
 export class HocVienComponent implements OnInit {
-
-  constructor() {}
+  HocVienForm: FormGroup;
+  constructor(private fb: FormBuilder) {}
 
 
   ngOnInit() {
     this.arHocVien.sort(function (a, b) {
       return b.id - a.id;
     });
+    this.HocVienForm = this.fb.group({
+      tenHV: '',
+      gioiTinh: ''
+    })
   }
   isShow = true;
   isShowAdd = false;
   isShowDel = false;
   isShowEdit = false;
   filterStatus = "tat_ca";
-  newName = [];
-  newGender = [];
   arHocVien = [
     { id: 1, tenHV: "Dinh", gioiTinh: true },
     { id: 2, tenHV: "Hoa", gioiTinh: true },
@@ -61,11 +64,14 @@ export class HocVienComponent implements OnInit {
 
   editHV(id) {
     const index = this.arHocVien.findIndex(e => e.id == id);
-    this.arHocVien[index].gioiTinh = typeof (this.newGender[id]) != "undefined" ?
-      (this.newGender[id] == "nam" || this.newGender[id] == "Nam") : this.arHocVien[index].gioiTinh;
-    this.arHocVien[index].tenHV = typeof (this.newName[id]) != "undefined" ?
-      this.newName[id] : this.arHocVien[index].tenHV;
-    this.newName = []; this.newGender = [];
+    this.arHocVien[index].gioiTinh = typeof (this.HocVienForm.value.gioiTinh) != "undefined" ?
+      (this.HocVienForm.value.gioiTinh == "nam" || this.HocVienForm.value.gioiTinh == "Nam") : this.arHocVien[index].gioiTinh;
+    this.arHocVien[index].tenHV = typeof (this.HocVienForm.value.tenHV) != "undefined" ?
+    this.HocVienForm.value.tenHV : this.arHocVien[index].tenHV;
     alert("Da sua thanh cong!");
+    this.HocVienForm = this.fb.group({
+      tenHV: '',
+      gioiTinh: ''
+    })
   }
 }
