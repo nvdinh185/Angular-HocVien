@@ -21,18 +21,16 @@
 </select>
 <button (click)="isShowDel=!isShowDel; isShow = !isShow" *ngIf="isShowDel">Xoa xong</button>
 <button (click)="isShowEdit=!isShowEdit; isShow = !isShow" *ngIf="isShowEdit">Sua xong</button>
-<form [formGroup] ="HocVienForm">
 <div *ngFor="let objHocVien of arHocVien" id="hocvien">
   <div *ngIf="getShowStatus(objHocVien.gioiTinh)">
     <h4>Ma hoc vien: {{ objHocVien.id }}</h4>
     <h3>Ho ten: <span *ngIf="!isShowEdit">{{ objHocVien.tenHV }}</span>
-      <input *ngIf="isShowEdit" placeholder="{{ objHocVien.tenHV }}" formControlName="tenHV" />
+      <input *ngIf="isShowEdit" placeholder="{{ objHocVien.tenHV }}" [(ngModel)]="newName[objHocVien.id]" />
     </h3>
     <p>Gioi tinh: <span *ngIf="!isShowEdit">{{ objHocVien.gioiTinh?"Nam":"Nu" }}</span>
-      <input *ngIf="isShowEdit" placeholder="{{ objHocVien.gioiTinh?'Nam':'Nu' }}" formControlName="gioiTinh" />
+      <input *ngIf="isShowEdit" placeholder="{{ objHocVien.gioiTinh?'Nam':'Nu' }}" [(ngModel)]="newGender[objHocVien.id]" />
     </p>
     <button (click)="deleteHV(objHocVien.id)" *ngIf="isShowDel">Xoa</button>
     <button (click)="editHV(objHocVien.id)" *ngIf="isShowEdit">Sua</button>
   </div>
 </div>
-</form>
