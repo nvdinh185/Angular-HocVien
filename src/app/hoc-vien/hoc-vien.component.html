@@ -1,26 +1,36 @@
 <p>
   hoc-vien works!
 </p>
+
+<!-- Hiển thị các nút thêm, sửa và xóa học viên -->
 <div *ngIf="isShow">
   <button (click)="isShowAdd=!isShowAdd; isShow=!isShow">Them hoc vien</button>
   <button (click)="isShowEdit=!isShowEdit; isShow=!isShow">Sua hoc vien</button>
   <button (click)="isShowDel=!isShowDel; isShow=!isShow">Xoa hoc vien</button>
 </div>
+
+<!-- Form để thêm học viên -->
 <form (ngSubmit)="addHV(HocVienForm)" #HocVienForm="ngForm" *ngIf="isShowAdd">
   <input placeholder="ten hoc vien" ngModel #txtTen="ngModel" name="tenHV" required />
-  <span class="error" *ngIf="txtTen.touched && txtTen?.errors?.required">Yeu cau nhap!</span><br /><br />
+  <span class="error" *ngIf="txtTen.touched && txtTen.errors?.required">Yeu cau nhap!</span><br /><br />
   <input placeholder="gioi tinh" ngModel #txtGioiTinh="ngModel" name="gioiTinh" required />
   <span class="error" *ngIf="txtGioiTinh.touched && txtGioiTinh?.errors?.required">Yeu cau nhap!</span><br /><br />
   <input [disabled]="HocVienForm.invalid" type="submit" value="Them" />
 </form>
+
 <h1>Thong tin hoc vien</h1>
+<!-- Các tùy chọn hiển thị -->
 <select [(ngModel)]="filterStatus">
   <option value="tat_ca">Tat ca</option>
   <option value="nam">Nam</option>
   <option value="nu">Nu</option>
 </select>
+
+<!-- các nút để xác nhận xóa xong hoặc sửa xong -->
 <button (click)="isShowDel=!isShowDel; isShow = !isShow" *ngIf="isShowDel">Xoa xong</button>
 <button (click)="isShowEdit=!isShowEdit; isShow = !isShow" *ngIf="isShowEdit">Sua xong</button>
+
+<!-- Hiển thị danh sách học viên -->
 <div *ngFor="let objHocVien of arHocVien" id="hocvien">
   <div *ngIf="getShowStatus(objHocVien.gioiTinh)">
     <h4>Ma hoc vien: {{ objHocVien.id }}</h4>
